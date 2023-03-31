@@ -1,24 +1,12 @@
-on: [push]
-name: Azure ARM
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
+trigger:
+- master
 
-      Checkout code
-    # - uses: actions/checkout@main
+name: Deploy Bicep files
 
-      # Log into Azure
-    # - uses: azure/login@v1
-      # with:
-        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+variables:
+  vmImageName: 'ubuntu-latest'
 
-      # Deploy Bicep file
-    - name: deploy
-      uses: azure/arm-deploy@v1
-      with:
-        scope: subscription
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        template: ./azskmain.bicep
-        region: westeurope
-        failOnStdErr: false
+  azureServiceConnection: '<your-connection-name>'
+  resourceGroupName: 'exampleRG'
+  location: '<your-resource-group-location>'
+  templateFile: './main.bicep'
